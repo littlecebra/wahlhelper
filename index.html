@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Standpunkte – Kommunalwahl 2026 in Bad Vilbel und dem Wetteraukreis. Welche Themen sind welcher Partei besonders wichtig? 15 Fragen, klare Positionen." />
+  <meta name="theme-color" content="#0a0f1a" />
+  <title>Standpunkte · Bad Vilbel & Wetteraukreis 2026</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+  <!-- =========================================================
+       SCREEN 1 – START
+       ========================================================= -->
+  <div id="screen-start" class="screen">
+
+    <section class="start-hero">
+      <span class="start-eyebrow">Kommunalwahl · 15. März 2026</span>
+      <h1 class="start-title">Standpunkte</h1>
+      <p class="start-subtitle">Bad Vilbel &amp; Wetteraukreis · Kommunalwahl 2026</p>
+      <p class="start-desc">
+        Welche Themen sind welcher Partei besonders wichtig?
+        Beantworte 15 Fragen und sieh, wie nah dir die Parteiprogramme
+        zur Stadtverordnetenversammlung oder zum Kreistag stehen.
+      </p>
+    </section>
+
+    <div class="module-grid">
+      <div class="module-card" id="card-a" role="button" tabindex="0" aria-label="Modul A starten: Stadtverordnetenversammlung Bad Vilbel">
+        <!-- Rendered by app.js -->
+      </div>
+      <div class="module-card" id="card-b" role="button" tabindex="0" aria-label="Modul B starten: Kreistag Wetteraukreis">
+        <!-- Rendered by app.js -->
+      </div>
+    </div>
+
+    <p class="start-disclaimer">
+      Basiert auf öffentlichen Wahlprogrammen und Pressemitteilungen, Stand März 2026.
+      Kein offizielles Angebot. Nicht mit einer Partei verbunden. Keine Gewähr für Vollständigkeit.
+      Scoring nach bestem Wissen und Gewissen, aber ohne Anspruch auf Objektivität.
+    </p>
+
+  </div><!-- /screen-start -->
+
+
+  <!-- =========================================================
+       SCREEN 2 – QUIZ
+       ========================================================= -->
+  <div id="screen-quiz" class="screen">
+
+    <!-- Sticky progress bar -->
+    <div class="quiz-progress-wrap" role="progressbar" aria-label="Fortschritt">
+      <div class="quiz-progress-track">
+        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <div class="quiz-header">
+      <div class="quiz-meta-row">
+        <span class="quiz-module-label" id="quiz-module-label"></span>
+        <span class="quiz-counter" id="quiz-counter"></span>
+      </div>
+      <div class="topic-badge" id="quiz-topic-badge"></div>
+      <h2 class="quiz-question-text" id="quiz-question-text"></h2>
+      <p class="quiz-context" id="quiz-context"></p>
+    </div>
+
+    <!-- Answer options -->
+    <div class="quiz-options" id="quiz-options" role="group" aria-label="Antwortoptionen">
+      <!-- Rendered by app.js -->
+    </div>
+
+    <!-- Weighting -->
+    <div class="quiz-weight-section">
+      <div class="quiz-weight-label">Gewichtung dieser Frage</div>
+      <div class="weight-chips" id="quiz-weights" role="group" aria-label="Gewichtung wählen">
+        <!-- Rendered by app.js -->
+      </div>
+    </div>
+
+    <!-- Skip -->
+    <div class="quiz-skip-wrap">
+      <button class="quiz-skip-btn" onclick="skipQuestion()">
+        Diese Frage überspringen
+      </button>
+    </div>
+
+    <!-- Navigation -->
+    <div class="quiz-nav">
+      <button
+        class="btn btn-ghost"
+        id="btn-back"
+        onclick="goPrev()"
+        aria-label="Zurück zur vorherigen Frage"
+      >← Zurück</button>
+
+      <button
+        class="btn btn-primary btn-next-main"
+        id="btn-next"
+        onclick="goNext()"
+        disabled
+        aria-label="Zur nächsten Frage"
+      >
+        <span id="btn-next-label">Weiter →</span>
+      </button>
+    </div>
+
+  </div><!-- /screen-quiz -->
+
+
+  <!-- =========================================================
+       SCREEN 3 – RESULTS
+       ========================================================= -->
+  <div id="screen-results" class="screen">
+
+    <!-- Header -->
+    <div class="results-header">
+      <div class="results-eyebrow">Dein Ergebnis</div>
+      <h2 class="results-title">Dein Match</h2>
+      <p class="results-subtitle" id="results-module-name"></p>
+    </div>
+
+    <!-- Match Bars -->
+    <section class="results-section" aria-label="Parteien-Match-Übersicht">
+      <div class="results-section-title">Match-Übersicht</div>
+      <div id="results-match-bars">
+        <!-- Rendered by app.js -->
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="divider"></div>
+    </div>
+
+    <!-- Thematic Breakdown -->
+    <section class="results-section" aria-label="Thematische Übersicht">
+      <div class="results-section-title">Thematische Übersicht</div>
+      <div class="accordion" id="results-thematic">
+        <!-- Rendered by app.js -->
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="divider"></div>
+    </div>
+
+    <!-- Sources -->
+    <section class="results-section" aria-label="Programm-Nachweise">
+      <div class="results-section-title">Programm-Nachweise &amp; Quellen</div>
+      <div class="accordion" id="results-sources">
+        <!-- Rendered by app.js -->
+      </div>
+    </section>
+
+    <!-- Action Buttons -->
+    <div class="results-actions">
+      <button class="btn btn-ghost" onclick="resetToStart()">
+        🔄 Andere Wahl testen
+      </button>
+      <button class="btn btn-primary" onclick="restartModule()">
+        ↩ Nochmal starten
+      </button>
+    </div>
+
+  </div><!-- /screen-results -->
+
+
+  <!-- Scripts: data.js muss vor app.js geladen sein -->
+  <script src="./data.js"></script>
+  <script src="./app.js"></script>
+
+  <!-- Keyboard support for module cards -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.module-card[role="button"]').forEach(function(card) {
+        card.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            card.click();
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

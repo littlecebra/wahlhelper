@@ -1,0 +1,11 @@
+services:
+  standpunkte:
+    # Passe GITHUB_USER auf deinen GitHub-Nutzernamen an,
+    # z.B. ghcr.io/sebastianbrams/lokal-o-mat:latest
+    image: ghcr.io/GITHUB_USER/lokal-o-mat:latest
+    container_name: standpunkte
+    restart: unless-stopped
+    ports:
+      - "8068:80"
+    # Für private Packages: docker login ghcr.io -u GITHUB_USER
+    # einmalig auf dem Home Server ausführen.
