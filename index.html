@@ -52,6 +52,44 @@
 
 
   <!-- =========================================================
+       SCREEN 1b – TOPIC SELECTION
+       ========================================================= -->
+  <div id="screen-topics" class="screen">
+
+    <div class="topics-header">
+      <div class="topics-eyebrow">Schritt 1 von 2 · Themen wählen</div>
+      <h2 class="topics-title" id="topics-module-title"></h2>
+      <p class="topics-desc">
+        Wähle die Themen, die dich interessieren. Fragen zu nicht ausgewählten
+        Themen werden automatisch als neutral gewertet und beeinflussen dein
+        Ergebnis nicht.
+      </p>
+    </div>
+
+    <div class="topics-controls">
+      <button class="topics-ctrl-btn" onclick="selectAllTopics(true)">Alle auswählen</button>
+      <button class="topics-ctrl-btn" onclick="selectAllTopics(false)">Alle abwählen</button>
+    </div>
+
+    <div class="topics-list" id="topics-list">
+      <!-- Rendered by app.js -->
+    </div>
+
+    <div class="topics-footer">
+      <p class="topics-count" id="topics-question-count"></p>
+      <button class="btn btn-primary topics-start-btn" id="btn-start-quiz" onclick="startQuizWithTopics()">
+        Quiz starten →
+      </button>
+    </div>
+
+    <div class="topics-back-wrap">
+      <button class="btn btn-ghost" onclick="resetToStart()">← Andere Wahl</button>
+    </div>
+
+  </div><!-- /screen-topics -->
+
+
+  <!-- =========================================================
        SCREEN 2 – QUIZ
        ========================================================= -->
   <div id="screen-quiz" class="screen">

@@ -13,7 +13,7 @@ const APP_DATA = {
   moduleA: {
     id: 'bad-vilbel',
     title: 'Stadtverordnetenversammlung Bad Vilbel',
-    subtitle: '15 Fragen zur Stadtpolitik · 6 Parteien · ca. 7 Minuten',
+    subtitle: '26 Fragen zur Stadtpolitik · 6 Parteien · Themen wählbar',
     parties: [
       { id: 'cdu',   name: 'CDU',   color: '#9ca3af' },
       { id: 'spd',   name: 'SPD',   color: '#ef4444' },
@@ -471,6 +471,336 @@ const APP_DATA = {
           fdp:    { text: 'FDP: ÖPNV-Angebote ausbauen, technologieoffen', url: 'https://fdp-bad-vilbel.de/wahlprogramm/' },
           afd:    { text: 'AfD: Autoverkehr nicht benachteiligen', url: 'https://www.afd-bad-vilbel.de/Kommunalpolitik/' },
           linke:  { text: 'LINKE: ÖPNV als bezahlbare und klimagerechte Alternative', url: 'https://die-linke-wetterau.de/programm-fuer-die-kommunalwahl-am-15-3-2026/' },
+        },
+      },
+
+      // Q16 – Tempo 30
+      {
+        id: 'a16',
+        topic: '🚗 Straßenverkehr',
+        question: 'Soll Bad Vilbel flächendeckend Tempo 30 in Wohngebieten einführen?',
+        context: 'In vielen Städten gilt Tempo 30 als Standard in Wohngebieten, um Lärm, Unfälle und Abgase zu senken. Autoverbände warnen vor Behinderung des Verkehrs.',
+        options: [
+          { id: 'a', text: 'Ja – Tempo 30 als Standard in allen Wohngebieten, Tempo 50 nur noch auf Hauptstraßen.' },
+          { id: 'b', text: 'Ja, aber nur an sensiblen Stellen – vor Schulen, Kitas und Seniorenheimen.' },
+          { id: 'c', text: 'Nein – Tempo 50 ist ausreichend; Einzelregelungen da wo nötig reichen.' },
+          { id: 'd', text: 'Nein – Tempo-30-Zonen bremsen den Verkehr und schaden dem Wirtschaftsverkehr.' },
+        ],
+        scores: {
+          cdu:    { a: -1, b:  1, c:  2, d:  1 },
+          spd:    { a:  1, b:  2, c:  0, d: -1 },
+          gruene: { a:  2, b:  1, c: -1, d: -2 },
+          fdp:    { a: -1, b:  0, c:  2, d:  1 },
+          afd:    { a: -2, b: -1, c:  1, d:  2 },
+          linke:  { a:  2, b:  1, c: -1, d: -2 },
+        },
+        sources: {
+          cdu:    { text: 'CDU: Ausgewogenes Miteinander aller Verkehrsarten, keine Pauschalregelungen', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/31070-bad-vilbel-cdu-stellt-programm-zur-kommunalwahl-2026-vor.html' },
+          spd:    { text: 'SPD: Sichere Straßen für alle, gezielte Verkehrsberuhigung', url: 'https://www.wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/30868-spd-bad-vilbel-erster-informationsstand-zur-kommunalwahl-2026.html' },
+          gruene: { text: 'GRÜNE: Tempo 30 als Standard für lebenswerte Straßen', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/27479-gr%C3%BCnes-wahlprogramm-f%C3%BCr-kommunalwahl-2026-verabschiedet.html' },
+          fdp:    { text: 'FDP: Freie Fahrt statt Pauschalverbote, Einzelfallregelungen bevorzugt', url: 'https://fdp-bad-vilbel.de/wahlprogramm/' },
+          afd:    { text: 'AfD: Autofahrer nicht unter Generalverdacht stellen', url: 'https://www.afd-bad-vilbel.de/Kommunalpolitik/' },
+          linke:  { text: 'LINKE: Klimagerechte und sichere Mobilität – Tempo 30 ist überfällig', url: 'https://die-linke-wetterau.de/programm-fuer-die-kommunalwahl-am-15-3-2026/' },
+        },
+      },
+
+      // Q17 – Parkgebühren
+      {
+        id: 'a17',
+        topic: '🅿️ Parken',
+        question: 'Soll Bad Vilbel im Innenstadtbereich kostenpflichtige Parkplätze einführen oder die Gebühren deutlich erhöhen?',
+        context: 'Parkplätze in der Innenstadt sind größtenteils kostenlos oder günstig. Parkgebühren könnten den Parkdruck mindern und Einnahmen für ÖPNV und Radwege generieren.',
+        options: [
+          { id: 'a', text: 'Ja – Parkgebühren einführen und Einnahmen direkt in ÖPNV und Radwegeausbau investieren.' },
+          { id: 'b', text: 'Kurzzeit-Parken gratis für Einkäufer, danach moderate Gebühren – ein fairer Mittelweg.' },
+          { id: 'c', text: 'Nein – kostenlose Parkplätze sind wichtig für Handel und Belebung der Innenstadt.' },
+          { id: 'd', text: 'Nein – Parkgebühren treiben Kunden weg und schwächen den lokalen Einzelhandel.' },
+        ],
+        scores: {
+          cdu:    { a: -1, b:  1, c:  2, d:  2 },
+          spd:    { a:  1, b:  2, c:  0, d: -1 },
+          gruene: { a:  2, b:  1, c: -1, d: -2 },
+          fdp:    { a: -1, b:  1, c:  2, d:  1 },
+          afd:    { a: -2, b: -1, c:  1, d:  2 },
+          linke:  { a:  2, b:  1, c: -1, d: -2 },
+        },
+        sources: {
+          cdu:    { text: 'CDU: Wirtschaftsfreundliche Innenstadt, freies Parken als Standortvorteil', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/31070-bad-vilbel-cdu-stellt-programm-zur-kommunalwahl-2026-vor.html' },
+          spd:    { text: 'SPD: Innenstadt stärken, ÖPNV als echte Alternative fördern', url: 'https://www.wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/30868-spd-bad-vilbel-erster-informationsstand-zur-kommunalwahl-2026.html' },
+          gruene: { text: 'GRÜNE: Parkraumbewirtschaftung für mehr Lebensqualität und Klimaschutz', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/27479-gr%C3%BCnes-wahlprogramm-f%C3%BCr-kommunalwahl-2026-verabschiedet.html' },
+          fdp:    { text: 'FDP: Freier Parkraum als Wettbewerbsvorteil für die Innenstadt', url: 'https://fdp-bad-vilbel.de/wahlprogramm/' },
+          afd:    { text: 'AfD: Autofahrer nicht belasten, freies Parken erhalten', url: 'https://www.afd-bad-vilbel.de/Kommunalpolitik/' },
+          linke:  { text: 'LINKE: Parkraum gerecht bewirtschaften, ÖPNV und Rad stärken', url: 'https://die-linke-wetterau.de/programm-fuer-die-kommunalwahl-am-15-3-2026/' },
+        },
+      },
+
+      // Q18 – Videoüberwachung
+      {
+        id: 'a18',
+        topic: '🔒 Sicherheit',
+        question: 'Soll Bad Vilbel öffentliche Plätze und den Bahnhof mit Videoüberwachungskameras ausstatten?',
+        context: 'Mehr Kameras sollen laut Befürwortern Kriminalität verhindern und aufklären. Kritiker sehen Videoüberwachung als teuren Eingriff in Bürgerrechte ohne nachgewiesene Wirkung.',
+        options: [
+          { id: 'a', text: 'Ja – Kameras auf Bahnhöfen, zentralen Plätzen und Problemzonen für mehr objektive Sicherheit.' },
+          { id: 'b', text: 'Nur dort, wo es nachweislich Probleme gibt – mit klaren Datenschutzregeln und Löschfristen.' },
+          { id: 'c', text: 'Nein – Videoüberwachung schreckt nicht ab, ist teuer und schränkt Bürgerrechte ein.' },
+          { id: 'd', text: 'Nein – Geld lieber in Streetworker, Prävention und soziale Angebote investieren.' },
+        ],
+        scores: {
+          cdu:    { a:  2, b:  1, c: -1, d: -1 },
+          spd:    { a:  0, b:  2, c:  0, d:  1 },
+          gruene: { a: -2, b:  0, c:  1, d:  2 },
+          fdp:    { a:  1, b:  2, c:  0, d: -1 },
+          afd:    { a:  2, b:  1, c: -2, d: -1 },
+          linke:  { a: -2, b: -1, c:  1, d:  2 },
+        },
+        sources: {
+          cdu:    { text: 'CDU: Öffentliche Sicherheit und Ordnung stärken', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/31070-bad-vilbel-cdu-stellt-programm-zur-kommunalwahl-2026-vor.html' },
+          spd:    { text: 'SPD: Sicherheit mit Augenmaß, soziale Prävention', url: 'https://www.wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/30868-spd-bad-vilbel-erster-informationsstand-zur-kommunalwahl-2026.html' },
+          gruene: { text: 'GRÜNE: Datenschutz schützen, Prävention statt Überwachung', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/27479-gr%C3%BCnes-wahlprogramm-f%C3%BCr-kommunalwahl-2026-verabschiedet.html' },
+          fdp:    { text: 'FDP: Datenschutzkonforme Sicherheitsmaßnahmen mit klaren Regeln', url: 'https://fdp-bad-vilbel.de/wahlprogramm/' },
+          afd:    { text: 'AfD: Mehr Videoüberwachung für innere Sicherheit', url: 'https://www.afd-bad-vilbel.de/Kommunalpolitik/' },
+          linke:  { text: 'LINKE: Gegen Überwachungsstaat – für soziale Prävention', url: 'https://die-linke-wetterau.de/programm-fuer-die-kommunalwahl-am-15-3-2026/' },
+        },
+      },
+
+      // Q19 – Integration
+      {
+        id: 'a19',
+        topic: '🤝 Integration',
+        question: 'Wie soll Bad Vilbel Geflüchtete und Zugewanderte in die Stadtgemeinschaft integrieren?',
+        context: 'Bad Vilbel beherbergt Geflüchtete in städtischen Unterkünften. Diskutiert wird über Kapazitäten, Integrationsangebote und welche Anforderungen an Neuzugewanderte gestellt werden.',
+        options: [
+          { id: 'a', text: 'Aktive Integration: Sprach- und Berufsangebote ausbauen, dezentrale Unterbringung, gelebte Willkommenskultur.' },
+          { id: 'b', text: 'Pragmatische Integration: Rechte und Pflichten klar kommunizieren, Unterbringung geordnet verwalten.' },
+          { id: 'c', text: 'Aufnahmekapazitäten begrenzen und stärker auf Rückführung pochen, wenn Bleiberecht fehlt.' },
+          { id: 'd', text: 'Weniger Zuwanderung – die Integrationsaufgabe übersteigt die Kapazitäten der Stadt.' },
+        ],
+        scores: {
+          cdu:    { a: -1, b:  2, c:  1, d:  0 },
+          spd:    { a:  2, b:  1, c: -1, d: -2 },
+          gruene: { a:  2, b:  0, c: -2, d: -2 },
+          fdp:    { a:  0, b:  2, c:  1, d: -1 },
+          afd:    { a: -2, b: -1, c:  2, d:  2 },
+          linke:  { a:  2, b:  0, c: -2, d: -2 },
+        },
+        sources: {
+          cdu:    { text: 'CDU: Integration mit klaren Anforderungen, Rückführung bei fehlendem Bleiberecht', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/31070-bad-vilbel-cdu-stellt-programm-zur-kommunalwahl-2026-vor.html' },
+          spd:    { text: 'SPD: Soziale Gerechtigkeit und gelebte Integration', url: 'https://www.wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/30868-spd-bad-vilbel-erster-informationsstand-zur-kommunalwahl-2026.html' },
+          gruene: { text: 'GRÜNE: Willkommenskultur und umfassende Integrationsangebote', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/27479-gr%C3%BCnes-wahlprogramm-f%C3%BCr-kommunalwahl-2026-verabschiedet.html' },
+          fdp:    { text: 'FDP: Geordnete Zuwanderung, klare Regeln und Integrationsanforderungen', url: 'https://fdp-bad-vilbel.de/wahlprogramm/' },
+          afd:    { text: 'AfD: Begrenzung der Aufnahme, Rückführungen forcieren', url: 'https://www.afd-bad-vilbel.de/Kommunalpolitik/' },
+          linke:  { text: 'LINKE: Offene Gesellschaft und Solidarität mit Geflüchteten', url: 'https://die-linke-wetterau.de/programm-fuer-die-kommunalwahl-am-15-3-2026/' },
+        },
+      },
+
+      // Q20 – Städtische Wohnungsbaugesellschaft
+      {
+        id: 'a20',
+        topic: '🏠 Wohnraum',
+        question: 'Soll Bad Vilbel eine eigene städtische Wohnungsbaugesellschaft gründen?',
+        context: 'Einige Kommunen gründen städtische Gesellschaften, um dauerhaft bezahlbaren Wohnraum zu schaffen und Sozialwohnungsquoten zu erfüllen. Andere setzen ganz auf private Investoren.',
+        options: [
+          { id: 'a', text: 'Ja – eine städtische GmbH soll günstigen Wohnraum bauen und dauerhaft im Bestand halten.' },
+          { id: 'b', text: 'Alternativ: Quotenpflicht für Sozialwohnungen bei privaten Neubauprojekten erhöhen.' },
+          { id: 'c', text: 'Nein – private Investoren bauen effizienter; die Stadt soll Rahmenbedingungen verbessern.' },
+          { id: 'd', text: 'Nein – staatlicher Wohnungsbau ist zu teuer und ineffizient; Marktlösungen sind besser.' },
+        ],
+        scores: {
+          cdu:    { a: -1, b:  0, c:  2, d:  1 },
+          spd:    { a:  2, b:  2, c: -1, d: -2 },
+          gruene: { a:  1, b:  2, c:  0, d: -2 },
+          fdp:    { a: -2, b: -1, c:  1, d:  2 },
+          afd:    { a: -1, b: -1, c:  1, d:  2 },
+          linke:  { a:  2, b:  1, c: -1, d: -2 },
+        },
+        sources: {
+          cdu:    { text: 'CDU: Privaten Wohnungsbau aktivieren, Markt Spielraum lassen', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/31070-bad-vilbel-cdu-stellt-programm-zur-kommunalwahl-2026-vor.html' },
+          spd:    { text: 'SPD: Bezahlbares Wohnen durch mehr Sozialbindung und kommunalen Bau', url: 'https://www.wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/30868-spd-bad-vilbel-erster-informationsstand-zur-kommunalwahl-2026.html' },
+          gruene: { text: 'GRÜNE: Öffentlicher Wohnungsbau als Kernaufgabe für bezahlbare Mieten', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/27479-gr%C3%BCnes-wahlprogramm-f%C3%BCr-kommunalwahl-2026-verabschiedet.html' },
+          fdp:    { text: 'FDP: Regulierungen abbauen statt staatlicher Wohnungsbau', url: 'https://fdp-bad-vilbel.de/wahlprogramm/' },
+          afd:    { text: 'AfD: Markt statt Staat beim Wohnungsbau', url: 'https://www.afd-bad-vilbel.de/Kommunalpolitik/' },
+          linke:  { text: 'LINKE: Kommunale Wohnungsbaugesellschaft dringend nötig', url: 'https://die-linke-wetterau.de/programm-fuer-die-kommunalwahl-am-15-3-2026/' },
+        },
+      },
+
+      // Q21 – Gewerbesteuer
+      {
+        id: 'a21',
+        topic: '💰 Finanzen',
+        question: 'Soll Bad Vilbel die Gewerbesteuer anheben, um mehr in soziale und ökologische Projekte zu investieren?',
+        context: 'Bad Vilbel hat eine der niedrigsten Gewerbesteuern Hessens. Das bringt Firmen in die Stadt, hinterlässt aber weniger Spielraum für Schulen, Kitas und Klimaschutz.',
+        options: [
+          { id: 'a', text: 'Ja – Gewerbesteuer auf den Landesdurchschnitt anheben und Mehreinnahmen in soziale und Klimaprojekte stecken.' },
+          { id: 'b', text: 'Leichte Anpassung möglich, wenn das Geld gezielt in Bildung und Infrastruktur fließt.' },
+          { id: 'c', text: 'Nein – die niedrige Gewerbesteuer ist ein klarer Standortvorteil; sie darf nicht erhöht werden.' },
+          { id: 'd', text: 'Nein – die Gewerbesteuer sollte eher weiter gesenkt werden, um mehr Firmen anzulocken.' },
+        ],
+        scores: {
+          cdu:    { a: -2, b: -1, c:  2, d:  1 },
+          spd:    { a:  1, b:  2, c:  0, d: -1 },
+          gruene: { a:  2, b:  1, c: -1, d: -2 },
+          fdp:    { a: -2, b: -1, c:  1, d:  2 },
+          afd:    { a: -1, b: -1, c:  2, d:  2 },
+          linke:  { a:  2, b:  1, c: -1, d: -2 },
+        },
+        sources: {
+          cdu:    { text: 'CDU: Zweitniedrigste Gewerbesteuer Hessens als Standortvorteil erhalten', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/31070-bad-vilbel-cdu-stellt-programm-zur-kommunalwahl-2026-vor.html' },
+          spd:    { text: 'SPD: Mehr Investitionen in soziale Infrastruktur nötig', url: 'https://www.wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/30868-spd-bad-vilbel-erster-informationsstand-zur-kommunalwahl-2026.html' },
+          gruene: { text: 'GRÜNE: Wirtschaft soll Beitrag zur Klimawandel-Bewältigung leisten', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/27479-gr%C3%BCnes-wahlprogramm-f%C3%BCr-kommunalwahl-2026-verabschiedet.html' },
+          fdp:    { text: 'FDP: Keine Steuererhöhungen, Standortvorteil erhalten', url: 'https://fdp-bad-vilbel.de/wahlprogramm/' },
+          afd:    { text: 'AfD: Niedrige Steuern für Wirtschaftswachstum', url: 'https://www.afd-bad-vilbel.de/Kommunalpolitik/' },
+          linke:  { text: 'LINKE: Reiche Kommunen müssen mehr in Soziales investieren', url: 'https://die-linke-wetterau.de/programm-fuer-die-kommunalwahl-am-15-3-2026/' },
+        },
+      },
+
+      // Q22 – Windkraft
+      {
+        id: 'a22',
+        topic: '☀️ Energie',
+        question: 'Sollen im Stadtgebiet Bad Vilbels Windenergieanlagen errichtet werden dürfen?',
+        context: 'Im Stadtwald und auf stadtnahen Flächen könnten Windräder entstehen. Befürworter sehen das als Beitrag zur Energiewende; Gegner befürchten Eingriffe in Natur und Stadtbild.',
+        options: [
+          { id: 'a', text: 'Ja – Windkraftanlagen im Stadtwald und auf geeigneten Flächen aktiv ermöglichen.' },
+          { id: 'b', text: 'Nur auf ausgewiesenen Flächen außerhalb von Schutzgebieten und nach breiter Bürgerbeteiligung.' },
+          { id: 'c', text: 'Nein – im dichten Stadtgebiet ist Windkraft zu belastend; lieber konsequent auf Photovoltaik setzen.' },
+          { id: 'd', text: 'Nein – Windkraft schadet Natur und Wohnqualität. Klare Ablehnung im Stadtgebiet.' },
+        ],
+        scores: {
+          cdu:    { a: -1, b:  1, c:  2, d:  0 },
+          spd:    { a:  1, b:  2, c:  1, d: -1 },
+          gruene: { a:  2, b:  1, c: -1, d: -2 },
+          fdp:    { a: -1, b:  1, c:  2, d:  0 },
+          afd:    { a: -2, b: -1, c:  1, d:  2 },
+          linke:  { a:  2, b:  1, c:  0, d: -2 },
+        },
+        sources: {
+          cdu:    { text: 'CDU: Stadtwald schützen, Windkraft mit Augenmaß', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/31070-bad-vilbel-cdu-stellt-programm-zur-kommunalwahl-2026-vor.html' },
+          spd:    { text: 'SPD: Erneuerbare Energien ausbauen, Energiewende mitgestalten', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/31025-spd-begr%C3%BC%C3%9Ft-beschluss-des-integrierten-klimaschutzkonzeptes.html' },
+          gruene: { text: 'GRÜNE: Wind und Solar massiv ausbauen – Energiewende braucht beides', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/27479-gr%C3%BCnes-wahlprogramm-f%C3%BCr-kommunalwahl-2026-verabschiedet.html' },
+          fdp:    { text: 'FDP: Technologieoffen – Photovoltaik oft effizienter als Windkraft im Stadtgebiet', url: 'https://fdp-bad-vilbel.de/wahlprogramm/' },
+          afd:    { text: 'AfD: Windkraft schadet Natur und Wohnqualität – klare Ablehnung', url: 'https://www.afd-bad-vilbel.de/Kommunalpolitik/' },
+          linke:  { text: 'LINKE: Erneuerbare Energien als kommunale Aufgabe, Windkraft unterstützen', url: 'https://die-linke-wetterau.de/programm-fuer-die-kommunalwahl-am-15-3-2026/' },
+        },
+      },
+
+      // Q23 – Senioren
+      {
+        id: 'a23',
+        topic: '👴 Senioren',
+        question: 'Wie soll Bad Vilbel seine älter werdenden Bürgerinnen und Bürger unterstützen?',
+        context: 'Bad Vilbel hat eine alternde Bevölkerung. Gebraucht werden Pflegeplätze, barrierefreie Infrastruktur, Mobilitätshilfen und Begegnungsangebote für Senioren.',
+        options: [
+          { id: 'a', text: 'Massiv investieren: Seniorenzentren ausbauen, Barrierefreiheit im öffentlichen Raum durchsetzen, Seniorenbus einrichten.' },
+          { id: 'b', text: 'Ambulante Pflege und Nachbarschaftshilfe stärken – damit Senioren länger selbstständig zuhause leben.' },
+          { id: 'c', text: 'Rahmenbedingungen für private Pflegeanbieter verbessern – der Markt soll Lücken schließen.' },
+          { id: 'd', text: 'Pflege ist primär Aufgabe von Land und Bund; die Stadt soll nicht in Konkurrenz zu privaten Anbietern treten.' },
+        ],
+        scores: {
+          cdu:    { a:  1, b:  2, c:  1, d:  0 },
+          spd:    { a:  2, b:  1, c:  0, d: -1 },
+          gruene: { a:  2, b:  2, c: -1, d: -1 },
+          fdp:    { a:  0, b:  1, c:  2, d:  1 },
+          afd:    { a:  1, b:  1, c:  1, d:  1 },
+          linke:  { a:  2, b:  1, c: -1, d: -2 },
+        },
+        sources: {
+          cdu:    { text: 'CDU: Stadt für alle Generationen, Unterstützung für Ehrenamt und Senioren', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/31070-bad-vilbel-cdu-stellt-programm-zur-kommunalwahl-2026-vor.html' },
+          spd:    { text: 'SPD: Soziale Gerechtigkeit für alle Generationen', url: 'https://www.wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/30868-spd-bad-vilbel-erster-informationsstand-zur-kommunalwahl-2026.html' },
+          gruene: { text: 'GRÜNE: Barrierefreie Stadt, soziale Infrastruktur ausbauen', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/27479-gr%C3%BCnes-wahlprogramm-f%C3%BCr-kommunalwahl-2026-verabschiedet.html' },
+          fdp:    { text: 'FDP: Private Pflegeangebote stärken, Eigenverantwortung fördern', url: 'https://fdp-bad-vilbel.de/wahlprogramm/' },
+          afd:    { text: 'AfD: Für ältere Bürger – Familie und Gemeinschaft stärken', url: 'https://www.afd-bad-vilbel.de/Kommunalpolitik/' },
+          linke:  { text: 'LINKE: Würdige Pflege als öffentliche Aufgabe – kein Markt mit Menschenwürde', url: 'https://die-linke-wetterau.de/programm-fuer-die-kommunalwahl-am-15-3-2026/' },
+        },
+      },
+
+      // Q24 – Ganztag & Schulsozialarbeit
+      {
+        id: 'a24',
+        topic: '📚 Bildung',
+        question: 'Soll Bad Vilbel den Ganztagsbetrieb an Grundschulen und Schulsozialarbeit über die gesetzliche Pflicht hinaus ausbauen?',
+        context: 'Ab 2026 gilt der Rechtsanspruch auf Ganztagsbetreuung. Diskutiert wird, ob die Stadt freiwillig mehr in Schulsozialarbeit und qualifiziertes Betreuungspersonal investiert.',
+        options: [
+          { id: 'a', text: 'Ja – Ganztag an allen Grundschulen mit qualifiziertem Personal und Schulsozialarbeit an jeder Schule.' },
+          { id: 'b', text: 'Gesetzliches Angebot umsetzen und Schulsozialarbeit schrittweise ausbauen.' },
+          { id: 'c', text: 'Gesetzliche Pflicht erfüllen, aber keine freiwilligen Extras, die den Haushalt belasten.' },
+          { id: 'd', text: 'Bildung ist primär Ländersache – die Stadt soll die Räume stellen, aber keine Pädagogen anstellen.' },
+        ],
+        scores: {
+          cdu:    { a:  0, b:  2, c:  1, d:  1 },
+          spd:    { a:  2, b:  1, c: -1, d: -1 },
+          gruene: { a:  2, b:  1, c: -1, d: -1 },
+          fdp:    { a:  0, b:  1, c:  1, d:  2 },
+          afd:    { a:  1, b:  1, c:  1, d:  1 },
+          linke:  { a:  2, b:  1, c: -1, d: -2 },
+        },
+        sources: {
+          cdu:    { text: 'CDU: Verlässliche Bildung und Kinderbetreuung als Themenbereich', url: 'https://www.cdu-bad-vilbel.de/programm' },
+          spd:    { text: 'SPD: Bildung als soziale Investition, Chancengleichheit von Anfang an', url: 'https://www.wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/30868-spd-bad-vilbel-erster-informationsstand-zur-kommunalwahl-2026.html' },
+          gruene: { text: 'GRÜNE: Bessere Kinderbetreuung als höchste Priorität', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/27479-gr%C3%BCnes-wahlprogramm-f%C3%BCr-kommunalwahl-2026-verabschiedet.html' },
+          fdp:    { text: 'FDP: Digitalisierung und Qualität statt teure Vollversorgung', url: 'https://fdp-bad-vilbel.de/wahlprogramm/' },
+          afd:    { text: 'AfD: Bildungsqualität verbessern, Leistung stärken', url: 'https://www.afd-bad-vilbel.de/Kommunalpolitik/' },
+          linke:  { text: 'LINKE: Bildung als öffentliche Aufgabe – keine Zwei-Klassen-Bildung', url: 'https://die-linke-wetterau.de/programm-fuer-die-kommunalwahl-am-15-3-2026/' },
+        },
+      },
+
+      // Q25 – Kulturförderung / VilCo
+      {
+        id: 'a25',
+        topic: '🎭 Kultur',
+        question: 'Wie soll Bad Vilbel mit dem VilCo und der Kulturförderung umgehen?',
+        context: 'Das VilCo ist Bad Vilbels Kulturzentrum und erwirtschaftet kein kostendeckendes Ergebnis. Diskutiert wird, wie viel die Stadt dauerhaft für Kultur ausgeben soll.',
+        options: [
+          { id: 'a', text: 'VilCo ausbauen und das Kulturangebot deutlich erweitern – Kultur ist Daseinsvorsorge.' },
+          { id: 'b', text: 'VilCo erhalten und stabilisieren; moderate Investitionen in Kultur, die Bürger tatsächlich nutzen.' },
+          { id: 'c', text: 'Kulturdefizite reduzieren – Angebote sollen sich stärker selbst finanzieren oder private Sponsoren finden.' },
+          { id: 'd', text: 'Privatisierung oder Kooperationen prüfen – städtisches Kulturengagement auf das Notwendige begrenzen.' },
+        ],
+        scores: {
+          cdu:    { a:  0, b:  2, c:  1, d:  1 },
+          spd:    { a:  2, b:  1, c: -1, d: -1 },
+          gruene: { a:  2, b:  1, c: -1, d: -2 },
+          fdp:    { a: -1, b:  1, c:  2, d:  2 },
+          afd:    { a: -1, b:  1, c:  2, d:  1 },
+          linke:  { a:  2, b:  1, c: -1, d: -2 },
+        },
+        sources: {
+          cdu:    { text: 'CDU: Kulturelle Angebote und Burgfestspiele erhalten, moderate Förderung', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/31070-bad-vilbel-cdu-stellt-programm-zur-kommunalwahl-2026-vor.html' },
+          spd:    { text: 'SPD: Kulturleben als Teil der Stadtidentität stärken', url: 'https://www.wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/30868-spd-bad-vilbel-erster-informationsstand-zur-kommunalwahl-2026.html' },
+          gruene: { text: 'GRÜNE: Lebendige Stadt mit vielfältiger Kultur', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/27479-gr%C3%BCnes-wahlprogramm-f%C3%BCr-kommunalwahl-2026-verabschiedet.html' },
+          fdp:    { text: 'FDP: Kostenbewusste Kulturförderung, Eigenfinanzierung stärken', url: 'https://fdp-bad-vilbel.de/wahlprogramm/' },
+          afd:    { text: 'AfD: Defizite bei öffentlichen Einrichtungen deutlich reduzieren', url: 'https://www.afd-bad-vilbel.de/Kommunalpolitik/' },
+          linke:  { text: 'LINKE: Kultur für alle – öffentliche Finanzierung verteidigen', url: 'https://die-linke-wetterau.de/programm-fuer-die-kommunalwahl-am-15-3-2026/' },
+        },
+      },
+
+      // Q26 – Stadtentwicklung / Baugebiete
+      {
+        id: 'a26',
+        topic: '🏗️ Stadtentwicklung',
+        question: 'Soll Bad Vilbel neue Wohnbaugebiete auf der grünen Wiese erschließen?',
+        context: 'Die Nachfrage nach Wohnraum ist hoch. Neue Baugebiete auf bisher unversiegelten Flächen wären die schnellste Lösung – sind aber umstritten wegen Flächenverbrauch und Infrastrukturkosten.',
+        options: [
+          { id: 'a', text: 'Ja – neue Baugebiete erschließen, um Wohnungsnot schnell zu lindern und die Stadt geordnet wachsen zu lassen.' },
+          { id: 'b', text: 'Nachverdichtung hat Vorrang; Außenentwicklung nur als ergänzende Maßnahme mit starker Sozialbindung.' },
+          { id: 'c', text: 'Nein – keine Grünflächen opfern; stattdessen Leerstand beseitigen und im Bestand verdichten.' },
+          { id: 'd', text: 'Nein – Wachstum stoppen; Bad Vilbel hat genug gebaut und die bestehende Infrastruktur schützen.' },
+        ],
+        scores: {
+          cdu:    { a:  2, b:  1, c: -1, d: -1 },
+          spd:    { a:  1, b:  2, c:  1, d: -1 },
+          gruene: { a: -2, b:  0, c:  2, d:  1 },
+          fdp:    { a:  2, b:  1, c:  0, d: -2 },
+          afd:    { a:  1, b:  1, c:  0, d:  2 },
+          linke:  { a:  0, b:  2, c:  1, d: -1 },
+        },
+        sources: {
+          cdu:    { text: 'CDU: Maßvolles Wachstum, neue Wohngebiete als Entlastung', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/31070-bad-vilbel-cdu-stellt-programm-zur-kommunalwahl-2026-vor.html' },
+          spd:    { text: 'SPD: Bezahlbares Wohnen hat Priorität, Nachverdichtung bevorzugt', url: 'https://www.wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/30868-spd-bad-vilbel-erster-informationsstand-zur-kommunalwahl-2026.html' },
+          gruene: { text: 'GRÜNE: Flächenverbrauch stoppen – nur Innenentwicklung', url: 'https://wetterau.news/wetteraukreis/bad-vilbel/351-bad-vilbel/27479-gr%C3%BCnes-wahlprogramm-f%C3%BCr-kommunalwahl-2026-verabschiedet.html' },
+          fdp:    { text: 'FDP: Wohnungsbau ermöglichen, Regulierungen abbauen', url: 'https://fdp-bad-vilbel.de/wahlprogramm/' },
+          afd:    { text: 'AfD: Kontrolliertes Wachstum, Stadtcharakter und Infrastruktur schützen', url: 'https://www.afd-bad-vilbel.de/Kommunalpolitik/' },
+          linke:  { text: 'LINKE: Sozialer Wohnungsbau statt Spekulation, Nachverdichtung mit Bindung', url: 'https://die-linke-wetterau.de/programm-fuer-die-kommunalwahl-am-15-3-2026/' },
         },
       },
 

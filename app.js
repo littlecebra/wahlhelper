@@ -10,11 +10,13 @@
 // SECTION: STATE
 // =============================================================================
 const STATE = {
-  currentModule: null,   // 'bad-vilbel' | 'wetteraukreis'
-  moduleData: null,      // reference to APP_DATA.moduleA or .moduleB
-  currentQ: 0,           // index into questions array
-  answers: [],           // { questionId, optionId, weight } or null (skipped)
-  scores: {},            // { partyId: number }
+  currentModule: null,        // 'bad-vilbel' | 'wetteraukreis'
+  moduleData: null,           // reference to APP_DATA.moduleA or .moduleB
+  currentQ: 0,                // index into activeQuestionIndices
+  activeQuestionIndices: [],  // indices of questions from moduleData.questions that are active
+  selectedTopics: null,       // Set of selected topic strings (null = all)
+  answers: [],                // indexed by full question array index; null = skipped/neutral
+  scores: {},                 // { partyId: number }
 };
 
 // =============================================================================
@@ -25,6 +27,7 @@ const STATE = {
  * Calculate match percentages for all parties.
  * For each answered question: partyScore += scores[party][answer] * weight
  * Max possible per question: 2 * weight
+ * Questions in non-selected topics remain null → skipped → neutral (not counted)
  * Returns object { partyId: percentage (0–100) }
  */
 function calcScores() {
@@ -38,7 +41,7 @@ function calcScores() {
   parties.forEach(p => { rawScores[p.id] = 0; maxScores[p.id] = 0; });
 
   answers.forEach((ans, idx) => {
-    if (!ans) return; // skipped
+    if (!ans) return; // skipped or non-selected topic
     const q = questions[idx];
     const weight = ans.weight || 1;
     parties.forEach(p => {
@@ -114,22 +117,113 @@ function renderModuleCard(containerId, moduleData, moduleKey, num) {
 }
 
 // =============================================================================
-// SECTION: RENDER – Screen 2 (Quiz)
+// SECTION: RENDER – Screen 1b (Topic Selection)
 // =============================================================================
 function startModule(moduleKey) {
   STATE.currentModule = moduleKey;
   STATE.moduleData = APP_DATA[moduleKey];
+  STATE.selectedTopics = null;
+  STATE.activeQuestionIndices = [];
+  renderTopicSelection();
+  showScreen('screen-topics');
+}
+
+function renderTopicSelection() {
+  const { moduleData } = STATE;
+
+  // Get unique topics in order of appearance
+  const seenTopics = new Set();
+  const topics = [];
+  moduleData.questions.forEach(q => {
+    if (!seenTopics.has(q.topic)) {
+      seenTopics.add(q.topic);
+      topics.push(q.topic);
+    }
+  });
+
+  const titleEl = document.getElementById('topics-module-title');
+  if (titleEl) titleEl.textContent = moduleData.title;
+
+  const listEl = document.getElementById('topics-list');
+  if (listEl) {
+    listEl.innerHTML = topics.map(topic => {
+      const qCount = moduleData.questions.filter(q => q.topic === topic).length;
+      return `
+        <label class="topic-checkbox-item">
+          <input
+            type="checkbox"
+            class="topic-cb"
+            value="${escHtml(topic)}"
+            checked
+            onchange="updateTopicCount()"
+          />
+          <span class="topic-checkbox-icon">✓</span>
+          <span class="topic-checkbox-label">${escHtml(topic)}</span>
+          <span class="topic-checkbox-count">${qCount}&nbsp;Frage${qCount !== 1 ? 'n' : ''}</span>
+        </label>
+      `;
+    }).join('');
+  }
+
+  updateTopicCount();
+}
+
+function updateTopicCount() {
+  const checkboxes = document.querySelectorAll('.topic-cb:checked');
+  const selectedTopics = new Set([...checkboxes].map(cb => cb.value));
+  const activeCount = STATE.moduleData.questions.filter(q => selectedTopics.has(q.topic)).length;
+
+  const countEl = document.getElementById('topics-question-count');
+  if (countEl) {
+    if (activeCount === 0) {
+      countEl.textContent = 'Kein Thema ausgewählt – bitte mindestens eines wählen.';
+      countEl.classList.add('topics-count--warn');
+    } else {
+      countEl.textContent = `${activeCount} Frage${activeCount !== 1 ? 'n' : ''} ausgewählt`;
+      countEl.classList.remove('topics-count--warn');
+    }
+  }
+
+  const startBtn = document.getElementById('btn-start-quiz');
+  if (startBtn) startBtn.disabled = activeCount === 0;
+}
+
+function selectAllTopics(checked) {
+  document.querySelectorAll('.topic-cb').forEach(cb => { cb.checked = checked; });
+  updateTopicCount();
+}
+
+function startQuizWithTopics() {
+  const checkboxes = document.querySelectorAll('.topic-cb:checked');
+  const selectedTopics = new Set([...checkboxes].map(cb => cb.value));
+
+  if (selectedTopics.size === 0) return; // guard
+
+  STATE.selectedTopics = selectedTopics;
+
+  // Determine active question indices (only questions whose topic is selected)
+  STATE.activeQuestionIndices = STATE.moduleData.questions
+    .map((q, i) => ({ q, i }))
+    .filter(({ q }) => selectedTopics.has(q.topic))
+    .map(({ i }) => i);
+
   STATE.currentQ = 0;
+  // answers indexed by full question array – non-active ones stay null (neutral in scoring)
   STATE.answers = new Array(STATE.moduleData.questions.length).fill(null);
+
   renderQuizQuestion();
   showScreen('screen-quiz');
 }
 
+// =============================================================================
+// SECTION: RENDER – Screen 2 (Quiz)
+// =============================================================================
 function renderQuizQuestion() {
-  const { moduleData, currentQ, answers } = STATE;
-  const q = moduleData.questions[currentQ];
-  const total = moduleData.questions.length;
-  const currentAns = answers[currentQ];
+  const { moduleData, currentQ, answers, activeQuestionIndices } = STATE;
+  const qIdx = activeQuestionIndices[currentQ];
+  const q = moduleData.questions[qIdx];
+  const total = activeQuestionIndices.length;
+  const currentAns = answers[qIdx];
 
   // Progress bar
   const pct = ((currentQ + 1) / total) * 100;
@@ -185,19 +279,23 @@ function renderQuizQuestion() {
 }
 
 function selectOption(optionId) {
-  const { currentQ, answers } = STATE;
-  const existingWeight = answers[currentQ]?.weight || 1;
-  answers[currentQ] = { questionId: STATE.moduleData.questions[currentQ].id, optionId, weight: existingWeight };
+  const qIdx = STATE.activeQuestionIndices[STATE.currentQ];
+  const existingWeight = STATE.answers[qIdx]?.weight || 1;
+  STATE.answers[qIdx] = {
+    questionId: STATE.moduleData.questions[qIdx].id,
+    optionId,
+    weight: existingWeight,
+  };
   renderQuizQuestion();
 }
 
 function setWeight(value) {
-  const { currentQ, answers } = STATE;
-  if (answers[currentQ]) {
-    answers[currentQ].weight = value;
+  const qIdx = STATE.activeQuestionIndices[STATE.currentQ];
+  if (STATE.answers[qIdx]) {
+    STATE.answers[qIdx].weight = value;
   } else {
     // Weight set before answering – remember it
-    answers[currentQ] = { questionId: null, optionId: null, weight: value };
+    STATE.answers[qIdx] = { questionId: null, optionId: null, weight: value };
   }
   // Re-render weight chips only
   const weightsEl = document.getElementById('quiz-weights');
@@ -212,8 +310,8 @@ function setWeight(value) {
 }
 
 function skipQuestion() {
-  const { currentQ, answers } = STATE;
-  answers[currentQ] = null; // explicitly skipped
+  const qIdx = STATE.activeQuestionIndices[STATE.currentQ];
+  STATE.answers[qIdx] = null; // explicitly skipped
   goNext();
 }
 
@@ -226,8 +324,8 @@ function goPrev() {
 }
 
 function goNext() {
-  const { currentQ, moduleData, answers } = STATE;
-  const total = moduleData.questions.length;
+  const { currentQ, activeQuestionIndices } = STATE;
+  const total = activeQuestionIndices.length;
 
   if (currentQ < total - 1) {
     STATE.currentQ++;
@@ -240,9 +338,10 @@ function goNext() {
 }
 
 function updateNavButtons() {
-  const { currentQ, moduleData, answers } = STATE;
-  const total = moduleData.questions.length;
-  const hasAnswer = answers[currentQ] !== null && answers[currentQ]?.optionId !== null;
+  const { currentQ, activeQuestionIndices, answers } = STATE;
+  const total = activeQuestionIndices.length;
+  const qIdx = activeQuestionIndices[currentQ];
+  const hasAnswer = answers[qIdx] !== null && answers[qIdx]?.optionId !== null;
 
   const backBtn = document.getElementById('btn-back');
   const nextBtn = document.getElementById('btn-next');
@@ -283,8 +382,6 @@ function renderMatchBars(sorted, scores) {
   const container = document.getElementById('results-match-bars');
   if (!container) return;
 
-  const topPct = scores[sorted[0].id] || 0;
-
   container.innerHTML = sorted.map((party, i) => {
     const pct = scores[party.id] || 0;
     const isBest = i === 0;
@@ -322,9 +419,11 @@ function renderThematicAccordion() {
   const container = document.getElementById('results-thematic');
   if (!container) return;
 
-  const { moduleData, answers } = STATE;
+  const { moduleData, answers, activeQuestionIndices } = STATE;
 
-  container.innerHTML = moduleData.questions.map((q, idx) => {
+  // Only show questions that were active (in selected topics)
+  container.innerHTML = activeQuestionIndices.map(idx => {
+    const q = moduleData.questions[idx];
     const ans = answers[idx];
     const answeredOpt = ans?.optionId ? q.options.find(o => o.id === ans.optionId) : null;
     const partyChips = buildPartyChips(q, ans);
@@ -365,7 +464,6 @@ function buildPartyChips(q, ans) {
     ).join('');
   }
 
-  const myScore = 2; // User chose this option, notional max
   return STATE.moduleData.parties.map(p => {
     const partyScore = q.scores[p.id]?.[ans.optionId] ?? 0;
     let cls, icon;
@@ -385,9 +483,12 @@ function renderSourcesAccordion(sorted) {
   const container = document.getElementById('results-sources');
   if (!container) return;
 
+  const { activeQuestionIndices } = STATE;
+
   container.innerHTML = sorted.map(party => {
     const partyId = party.id;
-    const sourceCards = STATE.moduleData.questions.map(q => {
+    const sourceCards = activeQuestionIndices.map(idx => {
+      const q = STATE.moduleData.questions[idx];
       const src = q.sources[partyId];
       if (!src) return '';
       return `
@@ -455,6 +556,8 @@ function resetToStart() {
   STATE.currentModule = null;
   STATE.moduleData = null;
   STATE.currentQ = 0;
+  STATE.activeQuestionIndices = [];
+  STATE.selectedTopics = null;
   STATE.answers = [];
   STATE.scores = {};
   showScreen('screen-start');
